@@ -1,4 +1,5 @@
 const ResultAddThread = require('../../Domains/threads/entities/ResultAddThread');
+const DetailThread = require('../../Domains/threads/entities/DetailThread');
 const ThreadRepository = require('../../Domains/threads/ThreadRepository');
 const NotFoundError = require('../../Commons/exceptions/NotFoundError');
 
@@ -44,7 +45,7 @@ class ThreadRepositoryPostgres extends ThreadRepository {
 
     const {rows} = await this._pool.query(query);
 
-    return rows[0];
+    return new DetailThread(rows[0]);
   }
 }
 
