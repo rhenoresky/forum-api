@@ -36,8 +36,8 @@ describe('LikeRepositoryPostgres', () => {
 
       const like = await LikesTableTestHelper.getLikeByCommentIdAndOwner(payload);
 
-      expect(addLike).toEqual('like-123');
-      expect(like).toHaveLength(1);
+      expect(addLike).toEqual({id: 'like-123'});
+      expect(like).toEqual(1);
     });
   });
 
@@ -56,10 +56,10 @@ describe('LikeRepositoryPostgres', () => {
 
       const likeRepositoryPostgres = new LikeRepositoryPostgres(pool, {});
 
-      await likeRepositoryPostgres.deleteLike(payload);
+      await likeRepositoryPostgres.removeLike(payload);
 
-      const like = LikesTableTestHelper.getLikeByCommentIdAndOwner(payload);
-      expect(like).toHaveLength(0);
+      const result = await LikesTableTestHelper.getLikeByCommentIdAndOwner(payload);
+      expect(result).toEqual(0);
     });
   });
 
@@ -80,7 +80,7 @@ describe('LikeRepositoryPostgres', () => {
 
       const resultCheck = await likeRepositoryPostgres.checkLikeIsExist(payload);
 
-      expect(resultCheck).toEqual(true);
+      expect(resultCheck).toEqual(1);
     });
 
     it('checkLikeExists should return false if like exists', async () => {
@@ -93,7 +93,7 @@ describe('LikeRepositoryPostgres', () => {
 
       const resultCheck = await likeRepositoryPostgres.checkLikeIsExist(payload);
 
-      expect(resultCheck).toEqual(false);
+      expect(resultCheck).toEqual(0);
     });
   });
 });
