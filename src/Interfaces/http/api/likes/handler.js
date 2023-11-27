@@ -1,7 +1,7 @@
 const LikeUseCase = require('../../../../Applications/use_case/LikeUseCase');
 
 class LikeHandler {
-  constructor({container}) {
+  constructor(container) {
     this._container = container;
 
     this.putLikeHandler = this.putLikeHandler.bind(this);

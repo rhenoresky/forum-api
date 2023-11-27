@@ -23,7 +23,7 @@ describe('/threads/{threadId}/comments/{commentId}/likes', () => {
     it('should response 401 when missing authentication', async () => {
       const server = await createServer(container);
       const response = await server.inject({
-        url: '/',
+        url: '/threads/thread-123/comments/comment-123/likes',
         method: 'PUT',
       });
 
@@ -36,7 +36,7 @@ describe('/threads/{threadId}/comments/{commentId}/likes', () => {
       const token = await TokenHelper.createAccessToken(username = 'robin', id = 'user-123');
       const server = await createServer(container);
       const response = await server.inject({
-        url: '/',
+        url: '/threads/thread-123/comments/comment-123/likes',
         method: 'PUT',
         headers: {
           authorization: `Bearer ${token}`,
@@ -57,7 +57,7 @@ describe('/threads/{threadId}/comments/{commentId}/likes', () => {
 
       const server = await createServer(container);
       const response = await server.inject({
-        url: '/',
+        url: '/threads/thread-123/comments/comment-123/likes',
         method: 'PUT',
         headers: {
           authorization: `Bearer ${token}`,
@@ -78,7 +78,7 @@ describe('/threads/{threadId}/comments/{commentId}/likes', () => {
 
       const server = await createServer(container);
       const response = await server.inject({
-        url: '/',
+        url: '/threads/thread-123/comments/comment-123/likes',
         method: 'PUT',
         headers: {
           authorization: `Bearer ${token}`,
