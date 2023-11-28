@@ -9,10 +9,10 @@ class LikeHandler {
 
   async putLikeHandler(request, h) {
     const likeUseCase = this._container.getInstance(LikeUseCase.name);
-    const {commentId} = request.params;
+    const {commentId, threadId} = request.params;
     const {id: owner} = request.auth.credentials;
 
-    await likeUseCase.execute({commentId, owner});
+    await likeUseCase.execute({threadId, commentId, owner});
     return {
       status: 'success',
     };

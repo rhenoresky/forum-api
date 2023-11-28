@@ -96,4 +96,20 @@ describe('LikeRepositoryPostgres', () => {
       expect(resultCheck).toEqual(0);
     });
   });
+
+  describe('getLikeCountByCommentId', () => {
+    it('must return the correct number of likes', async () => {
+      await UsersTableTestHelper.addUser({});
+      await ThreadsTableTestHelper.addThread({});
+      await UsersTableTestHelper.addUser({id: 'user-456', username: 'Robert'});
+      await CommentsTableTestHelper.addComment({});
+      await LikesTableTestHelper.addLike({owner: 'user-456'});
+
+      const likeRepositoryPostgres = new LikeRepositoryPostgres(pool, {});
+
+      const result = await likeRepositoryPostgres.getLikeCountByCommentId('comment-123');
+
+      expect(result).toEqual(1);
+    });
+  });
 });

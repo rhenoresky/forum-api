@@ -32,8 +32,27 @@ describe('/threads/{threadId}/comments/{commentId}/likes', () => {
       expect(responseJson.error).toEqual('Unauthorized');
     });
 
-    it('should respond to 404 when comment is not found', async () => {
+    it('should respond to 404 when thread is not found', async () => {
       const token = await TokenHelper.createAccessToken(username = 'robin', id = 'user-123');
+      const server = await createServer(container);
+      const response = await server.inject({
+        url: '/threads/thread-123/comments/comment-123/likes',
+        method: 'PUT',
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+
+      const responseJson = JSON.parse(response.payload);
+      expect(response.statusCode).toEqual(404);
+      expect(responseJson.status).toEqual('fail');
+      expect(responseJson.message).toEqual('Thread tidak ditemukan');
+    });
+
+    it('should respond to 404 when comment is not found', async () => {
+      await UsersTableTestHelper.addUser({});
+      await ThreadsTableTestHelper.addThread({});
+      const token = await TokenHelper.createAccessToken(username = 'robin', id = 'user-456');
       const server = await createServer(container);
       const response = await server.inject({
         url: '/threads/thread-123/comments/comment-123/likes',
