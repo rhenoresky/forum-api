@@ -5,3 +5,5 @@ config/database/test.json
 coverage
 .env
 forumapi-key.pem
+nginx.txt
+hostname.txt
