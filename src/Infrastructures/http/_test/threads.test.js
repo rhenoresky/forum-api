@@ -1,6 +1,7 @@
 const pool = require('../../database/postgres/pool');
 const ThreadTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
 const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelper');
+const LikesTableTestHelper = require('../../../../tests/LikesTableTestHelper');
 const container = require('../../container');
 const createServer = require('../createServer');
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
@@ -14,6 +15,8 @@ describe('/threads endpoint', () => {
   afterEach(async () => {
     await ThreadTableTestHelper.cleanTable();
     await UsersTableTestHelper.cleanTable();
+    await CommentsTableTestHelper.cleanTable();
+    await LikesTableTestHelper.cleanTable();
   });
 
   describe('when POST /threads', () => {
@@ -125,6 +128,7 @@ describe('/threads endpoint', () => {
       await CommentsTableTestHelper.addComment({});
       await UsersTableTestHelper.addUser({id: 'user-789', username: 'Kipli'});
       await CommentsTableTestHelper.addComment({id: 'comment-456', content: 'comment kipli', userId: 'user-789', isDelete: true});
+      await LikesTableTestHelper.addLike({owner: 'user-789'});
       const server = await createServer(container);
       const response = await server.inject({
         url: '/threads/thread-123',

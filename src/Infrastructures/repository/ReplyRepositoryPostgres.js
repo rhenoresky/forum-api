@@ -20,8 +20,8 @@ class ReplyRepositoryPostgres extends ReplyRepository {
       values: [id, content, commentId, owner, createdAt],
     };
 
-    const result = await this._pool.query(query);
-    return new ResultAddReply({...result.rows[0]});
+    const {rows} = await this._pool.query(query);
+    return new ResultAddReply(rows[0]);
   }
 
   async getReplyByThreadId(threadId) {
